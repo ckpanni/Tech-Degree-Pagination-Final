@@ -46,7 +46,6 @@ const showPage = (list, page) => {
 
 const addPagination = (list) => {
     const numOfButtons = Math.ceil(list.length / studentsPerPage);
-
     linkListUL.innerHTML = '';
 
     for (let i = 1; i <= numOfButtons; i++) {
@@ -55,9 +54,7 @@ const addPagination = (list) => {
                      </li>`;
 
         linkListUL.insertAdjacentHTML("beforeend", buttonHTML);
-
     }
-
 
     linkListUL.querySelector("button").classList.add("active");
     linkListUL.addEventListener("click", (e) => {
