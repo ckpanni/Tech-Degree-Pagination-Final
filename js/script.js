@@ -75,11 +75,14 @@ const addPagination = (list) => {
 }
 
 // Controls the filtering for our search bar. Since we have dynamically generated the search bar, we cannot attach an event listener directly to it. Instead, I am attaching an event listner to its parent, the header. I'm capturing the input element as the target. When we enter text into the input, the event propagates up to the header, and we are able to then correctly filter our data. I create an empty array to hold filtered data. I am then looping over the array, and concatinating a first and last name to lower case. The I search. If the student name is included in the user input, we push the data array index into the new array we have created. The, I am doing a check to make sure that our array has some data, and if it does, we are calling the showPage and the addPagination functions. These display the new array created from our data and what the user put it. If we don't have data in the array, we display text that tells the user no results found. Then, we clear the contents of the page, so we can start fresh.
-header.addEventListener("keyup", (el) => {
-    const input = el.target;
-    const searchResults = [];
-    const userInput = input.value.toLowerCase();
 
+const searchFunctionality = (el, element) => {
+    const target = el.target;
+    const elNodeName = el.target.nodeName.toLowerCase();
+    const searchResults = [];
+    const userInput = target.value.toLowerCase();
+  
+    if (elNodeName === element) {
     for (let i = 0; i < data.length; i++) {
         const studentName = data[i].name.first.toLowerCase() + ' ' + data[i].name.last.toLowerCase();
 
@@ -95,8 +98,16 @@ header.addEventListener("keyup", (el) => {
         studentListUL.innerHTML = '<h3>No results found</h3>';
         linkListUL.innerHTML = '';
     }
+}
+}
 
+header.addEventListener("keyup", (el) => {
+   searchFunctionality(el, 'input');
 });
+
+header.addEventListener("click", (el) => {
+ console.log(el, 'img');
+})
 
 
 // Calling created functions
