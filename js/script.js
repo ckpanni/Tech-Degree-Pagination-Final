@@ -39,9 +39,7 @@ const showPage = (list, page) => {
 
             studentListUL.insertAdjacentHTML("beforeend", html);
         }
-
     }
-
 }
 
 
@@ -74,14 +72,15 @@ const addPagination = (list) => {
     });
 }
 
-// This section handles the search logic for the search field. I created a function that takes an element as a parameter. 
-const searchLogic = (element) => {
+// This section handles the search logic for the search field. First, I create an empty searchResults array to store the new set of filtered search results. Then, I select the input element within the dynamically generated search field. I loop through the data, and create a new studentName variable that concatenate the first and last name values from the student objects. If the studentName exists in the input value, I will push the objects into the new array. If there is one or more objects in the new array, I call the addPagination function, and the showPage function, to show the new data. If there's no data in the array, then we show a message, and clear the rest of the content from the page. 
+const searchLogic = () => {
     const searchResults = [];
+    const input = document.querySelector("input").value.toLowerCase();
 
     for (let i = 0; i < data.length; i++) {
         const studentName = data[i].name.first.toLowerCase() + ' ' + data[i].name.last.toLowerCase();
 
-        if (studentName.includes(element)) {
+        if (studentName.includes(input)) {
             searchResults.push(data[i]);
         }
     }
@@ -95,14 +94,13 @@ const searchLogic = (element) => {
     }
 }
 
+// I bind an event listener to the header, which is the parent of the search field. I then call the searchLogic function created above.Since the search field is dynamically generated, I need to bind functionality to its parent element, so that its values bubble up to the parent. I created two event listeners for click and keyup. This handles a user being able to write in the search field, and copy paste into the search field. 
 header.addEventListener("click", () => {
- const input = document.querySelector("input").value.toLowerCase();
- searchLogic(input);
+ searchLogic();
 });
 
 header.addEventListener("keyup", () => {
-    const input = document.querySelector("input").value.toLowerCase();
-    searchLogic(input);
+    searchLogic();
 });
 
 
